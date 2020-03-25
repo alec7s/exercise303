@@ -18,25 +18,25 @@ public class HomeController {
     ToDoRepository toDoRepository;
 
     @RequestMapping("/")
-    public String listCourses(Model model){
+    public String listTodos(Model model){
         model.addAttribute("todos", toDoRepository.findAll());
         return "list";
     }
     @GetMapping("/add")
-    public String courseForm(Model model){
+    public String todoForm(Model model){
         model.addAttribute("todo", new ToDo());
         return "todoform";
     }
     @PostMapping("/process")
     public String processForm(@Valid ToDo toDo, BindingResult result){
         if (result.hasErrors()){
-            return "courseform";
+            return "todoform";
         }
         toDoRepository.save(toDo);
         return "redirect:/";
     }
     @RequestMapping("/detail/{id}")
-    public String showCourse(@PathVariable("id") long id, Model model){
+    public String showTodo(@PathVariable("id") long id, Model model){
         model.addAttribute("todo", toDoRepository.findById(id).get());
         return "show";
     }
